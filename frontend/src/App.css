@@ -1,0 +1,276 @@
+:root {
+  --bg: #f6f8fb;
+  --card: #fff;
+  --accent: #2b8aef;
+  --muted: #7a7f86;
+  --danger: #e74c3c;
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+}
+
+body {
+  background: linear-gradient(135deg, #ff6a00, #ee0979);
+  min-height: 100vh;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px;
+}
+
+.edit-input {
+  padding: 4px;
+  margin: 2px 0;
+  width: 100%;
+}
+.edit-para{
+  font-weight: bold;
+  margin: 0 0 18px 0;
+  color: var(--muted) , orange;
+  font-size: 14px;
+  text-align: center;
+}
+.edit-input.desc {
+  font-size: 0.9em;
+  color: #555;
+}
+
+
+.container {
+  width: 100%;
+  max-width: 700px;
+  background: var(--card);
+  background: linear-gradient(135deg, #ffffff, #f9f9f9);
+  border-radius: 12px;
+  box-shadow: 0 6px 24px rgba(36, 50, 80, 0.08);
+  padding: 50px;
+}
+
+h1 {
+  margin: 0 0 12px 0;
+  font-size: 30px;
+  color: #e74c3c;
+  text-align: center;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+/* Scrollable list */
+
+/* Timestamp style */
+.todo-time {
+  font-size: 12px;
+  color: #888;
+  margin-top: 4px;
+}
+
+/* Empty message */
+.empty-msg {
+  text-align: center;
+  color: #aaa;
+  padding: 18px;
+  border-radius: 8px;
+  border: 1px dashed #ececec;
+}
+
+/* Sorting controls */
+.sort-controls {
+  margin: 10px 0;
+}
+
+p.lead {
+  margin: 0 0 18px 0;
+  color: var(--muted);
+  font-size: 14px;
+  text-align: center;
+}
+
+.add-row {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 18px;
+}
+
+.add-row input {
+  flex: 1;
+  padding: 12px 14px;
+  border-radius: 8px;
+  border: 1px solid #e3e6ea;
+  font-size: 14px;
+  outline: none;
+  transition: box-shadow .12s;
+}
+
+.add-row input:focus {
+  box-shadow: 0 0 0 4px rgba(43, 138, 239, 0.08);
+  border-color: var(--accent);
+}
+
+.btn {
+  background: rgb(47, 255, 161);
+  color: #fff;
+  border: none;
+  padding: 12px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.btn.ghost {
+  background: transparent;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+}
+
+ul.todo-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 380px;
+  overflow: auto;
+}
+
+ul.todo-list li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #f0f2f4;
+  margin-bottom: 10px;
+  background: linear-gradient(180deg, #fff, #fbfdff);
+}
+/* Card that holds the todo list */
+.todo-card{
+  max-height: 2ss00px;      /* fixed height for the card */
+  overflow-y: auto;       /* only this card scrolls */
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background: #fff;
+  margin: 15px 0;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+/* Keep UL clean */
+.todo-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Optional: nicer scrollbar */
+.todo-card::-webkit-scrollbar {
+  width: 6px;
+}
+.todo-card::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 4px;
+}
+.todo-card::-webkit-scrollbar-thumb:hover {
+  background: #999;
+}
+
+.todo-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  min-width: 0;
+}
+
+.todo-left input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+}
+.todo-desc {
+  font-size: 13px;
+  color: var(--muted);
+  margin-left: 30px; 
+}
+
+
+.todo-text {
+  font-size: 15px;
+  color: #122;
+  word-break: break-word;
+  flex: 1;
+  min-width: 0;
+  cursor: pointer;
+}
+
+.todo-text.completed {
+  text-decoration: line-through;
+  color: var(--muted);
+  opacity: 0.8;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+  align-items:center;
+}
+.todo-desc {
+  font-size: 13px;
+  color: var(--muted);
+  margin-left: 30px; /* indent to align under text */
+}
+
+.todo-desc-completed {
+  text-decoration: line-through;
+  color: var(--muted);
+  opacity: 0.8;
+}
+
+
+.icon-btn {
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  font-size: 16px;
+  color: var(--muted);
+}
+
+.icon-btn.del {
+  color: var(--danger);
+}
+
+.meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 12px;
+  align-items: center;
+}
+
+.meta .left {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.meta .right {
+  display: flex;
+  gap: 8px;
+}
+
+.small {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.edit-input {
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid #e3e6ea;
+  width: 100%;
+  font-size: 15px;
+}
+
+@media (max-width: 520px) {
+  .container {
+    padding: 18px;
+  }
+  .add-row input {
+    padding: 10px;
+  }
+  .btn {
+    padding: 10px 12px;
+  }
+}
