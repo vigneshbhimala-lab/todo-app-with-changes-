@@ -10,9 +10,12 @@ function App() {
   const [description, setDescription] = useState('');
   const [sortBy, setSortBy] = useState('newest'); // sorting state
   const [editId, setEditId] = useState(null);
-    const [editText, setEditText] = useState('');
-    const [editDesc, setEditDesc] = useState('');
-    const inputRef = useRef(null);
+  const [editText, setEditText] = useState('');
+  const [editDesc, setEditDesc] = useState('');
+  const inputRef = useRef(null);
+  const [confirmAction, setConfirmAction] = useState(null); 
+  const [confirmMessage, setConfirmMessage] = useState('');
+
 
 const startEdit = (id, currentText, currentDesc) => {
   setEditId(id);
@@ -53,12 +56,27 @@ const cancelEdit = () => {
     setTodos(res.data);
   };
 
-  const addTodo = async () => {
+  function ConfirmModal({ message, onConfirm, onCancel }) {
+  return (
+    <div className="modal-overlay">
+      <div className="modal">
+        <p>{message}</p>
+        <div className="modal-buttons">
+          <button className="btn confirm" onClick={onConfirm}>Yes</button>
+          <button className="btn cancel" onClick={onCancel}>No</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+
+  const addTodo = async () => {  
     if (!text.trim()) return;
     const res = await axios.post(API_URL, { 
       text, 
       description, 
-      createdAt: new Date().toISOString() // add timestamp
+      createdAt: new Date().toISOString() 
     });
     setTodos([...todos, res.data]);
     setText('');
@@ -72,25 +90,33 @@ const cancelEdit = () => {
   };
 
   const deleteTodo = async (id) => {
-    if (!window.confirm("Delete this task?")) return;
+    setConfirmMessage("Are you sure you want to delete this task?");
+  setConfirmAction(() => async () => {
     await axios.delete(`${API_URL}/${id}`);
     setTodos(todos.filter(t => t._id !== id));
+  });
   };
 
   
 
-  const clearCompleted = async () => {
-    if (!window.confirm("Clear completed tasks?")) return;
+  const clearCompleted =  () => {
+    setConfirmMessage("Clear all completed tasks?");
+  setConfirmAction(() => async () => {
     const completed = todos.filter(t => t.completed);
     await Promise.all(completed.map(t => axios.delete(`${API_URL}/${t._id}`)));
     fetchTodos();
+  });
   };
 
-  const resetAll = async () => {
-    if (!window.confirm("Reset all todos?")) return;
+  const resetAll = () => {
+    setConfirmMessage("Reset and delete all todos?");
+     setConfirmAction(() => async () => {
     await Promise.all(todos.map(t => axios.delete(`${API_URL}/${t._id}`)));
     fetchTodos();
+     });
   };
+  
+
 
   const remaining = todos.filter(t => !t.completed).length;
 
@@ -104,6 +130,8 @@ const cancelEdit = () => {
   });
 
   return (
+          
+    
     <div className="container" role="main">
       <h1>My To-Do List</h1>
       <p className="lead">Add tasks, mark complete, edit, delete and  Double click to edit Todo</p>
@@ -137,7 +165,7 @@ const cancelEdit = () => {
         </select>
       </div>
 
-    <p className="edit-para">  Double click to edit Todo</p>
+    <p className="edit-para">  Double click to edit Todo and press Enter</p>
 
 <div className="todo-card">
   <ul className="todo-list">
@@ -176,7 +204,6 @@ const cancelEdit = () => {
           </div>
         )}
 
-        {/* Editable description */}
         {editId === td._id ? (
           <input
             type="text"
@@ -184,7 +211,7 @@ const cancelEdit = () => {
             placeholder="Edit description"
             value={editDesc}
             onChange={e => setEditDesc(e.target.value)}
-            
+             
             onKeyDown={e => {
                 if (e.key === 'Enter') saveEdit(td._id, editText, editDesc);
                 if (e.key === 'Escape') cancelEdit();
@@ -225,6 +252,17 @@ const cancelEdit = () => {
           <button className="icon-btn" onClick={resetAll}>Reset</button>
         </div>
       </div>
+      {confirmAction && (
+          <ConfirmModal
+            message={confirmMessage}
+            onConfirm={() => {
+              confirmAction();
+              setConfirmAction(null);
+              setConfirmMessage('');
+          }}
+          onCancel={() => setConfirmAction(null)}
+        />
+      )}
     </div>
   );
 }
